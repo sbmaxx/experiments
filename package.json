@@ -10,6 +10,7 @@
     "node": ">=0.10"
   },
   "dependencies": {
+    "benchmark": "^1.0.0",
     "bower": "^1.4.1",
     "enb-bh": "^1.0.0",
     "fast-stats": "0.0.3"
