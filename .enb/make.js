@@ -1,21 +1,9 @@
 var techs = {
         // essential
         fileProvider: require('enb/techs/file-provider'),
-        fileMerge: require('enb/techs/file-merge'),
 
-        // optimization
-        borschik: require('enb-borschik/techs/borschik'),
-
-        // css
-        stylus: require('enb-stylus/techs/stylus'),
-
-        // js
-        browserJs: require('enb-diverse-js/techs/browser-js'),
-        prependYm: require('enb-modules/techs/prepend-modules'),
-
-        // bemtree
-        // bemtree: require('enb-bemxjst/techs/bemtree'),
-
+        // bh
+        bh: require('enb-bh/techs/bh-bundle'),
         // bemhtml
         bemhtml: require('enb-bemxjst/techs/bemhtml'),
         bemjsonToHtml: require('enb-bemxjst/techs/bemjson-to-html')
@@ -44,57 +32,18 @@ module.exports = function(config) {
             [enbBemTechs.deps],
             [enbBemTechs.files],
 
-            // css
-            [techs.stylus, {
-                target: '?.css',
-                autoprefixer: {
-                    browsers: ['ie >= 10', 'last 2 versions', 'opera 12.1', '> 2%']
-                }
-            }],
-
             // bemtree
             // [techs.bemtree, { devMode: process.env.BEMTREE_ENV === 'development' }],
 
             // bemhtml
             [techs.bemhtml, { devMode: process.env.BEMHTML_ENV === 'development' }],
+            [techs.bh, { bhOptions: {
+                jsAttrName: 'data-bem',
+                jsAttrScheme: 'json'
+            } }]
 
-            // html
-            [techs.bemjsonToHtml],
-
-            // client bemhtml
-            [enbBemTechs.depsByTechToBemdecl, {
-                target: '?.bemhtml.bemdecl.js',
-                sourceTech: 'js',
-                destTech: 'bemhtml'
-            }],
-            [enbBemTechs.deps, {
-                target: '?.bemhtml.deps.js',
-                bemdeclFile: '?.bemhtml.bemdecl.js'
-            }],
-            [enbBemTechs.files, {
-                depsFile: '?.bemhtml.deps.js',
-                filesTarget: '?.bemhtml.files',
-                dirsTarget: '?.bemhtml.dirs'
-            }],
-            [techs.bemhtml, {
-                target: '?.browser.bemhtml.js',
-                filesTarget: '?.bemhtml.files',
-                devMode: process.env.BEMHTML_ENV === 'development'
-            }],
-
-            // js
-            [techs.browserJs],
-            [techs.fileMerge, {
-                target: '?.pre.js',
-                sources: ['?.browser.bemhtml.js', '?.browser.js']
-            }],
-            [techs.prependYm, { source: '?.pre.js' }],
-
-            // borschik
-            [techs.borschik, { source: '?.js', target: '?.min.js', minify: isProd }],
-            [techs.borschik, { source: '?.css', target: '?.min.css', tech: 'cleancss', minify: isProd }]
         ]);
 
-        nodeConfig.addTargets([/* '?.bemtree.js', */ '?.html', '?.min.css', '?.min.js']);
+        nodeConfig.addTargets(['?.bh.js', '?.bemhtml.js']);
     });
 };
