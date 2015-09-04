@@ -1,6 +1,7 @@
 var bemjson = require('./desktop.bundles/index/index.bemjson.js'),
-    // template = require('./desktop.bundles/index/index.bemhtml.js').BEMHTML;
-    template = require('./desktop.bundles/index/index.bh.js');
+    template = process.argv[2] === 'bh'
+        ? require('./desktop.bundles/index/index.bh.js')
+        : require('./desktop.bundles/index/index.bemhtml.js').BEMHTML;
 
 var Stats = require('fast-stats').Stats;
 
