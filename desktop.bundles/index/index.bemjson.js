@@ -494,4 +494,4 @@ var button = {
     block: 'button'
 };
 
-module.exports = [button];
+module.exports = button;

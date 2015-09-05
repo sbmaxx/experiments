@@ -5,8 +5,7 @@ var techs = {
         // bh
         bh: require('enb-bh/techs/bh-bundle'),
         // bemhtml
-        bemhtml: require('enb-bemxjst/techs/bemhtml'),
-        bemjsonToHtml: require('enb-bemxjst/techs/bemjson-to-html')
+        bemhtml: require('enb-bemxjst-2/techs/bemhtml')
     },
     enbBemTechs = require('enb-bem-techs'),
     levels = [

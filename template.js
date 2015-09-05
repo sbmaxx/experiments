@@ -8,7 +8,10 @@ var Stats = require('fast-stats').Stats;
 var s = new Stats(),
     start, diff;
 
-var iterations = 100;
+console.log(bemjson);
+console.log(template.apply(bemjson));
+
+var iterations = 1000;
 
 for (var i = 0; i < iterations; i++) {
     start = process.hrtime();

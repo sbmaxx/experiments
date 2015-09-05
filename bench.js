@@ -7,11 +7,21 @@ var bemjson = require('./desktop.bundles/index/index.bemjson.js'),
 var suite = new Benchmark.Suite;
 
 suite
-    .add('bemhtml', function() {
-        bemhtml.apply(bemjson);
+    .add('bemhtml 1 button', function() {
+        bemhtml.apply({ block: 'button' });
     })
-    .add('bh', function() {
-        bh.apply(bemjson);
+    .add('bh 1 button', function() {
+        bh.apply({ block: 'button' });
+    })
+    .add('bemhtml 10 button', function() {
+        bemhtml.apply((new Array(10).join().split().map(function() {
+            return { block: 'button' };
+        })));
+    })
+    .add('bh 10 button', function() {
+        bh.apply((new Array(10).join().split().map(function() {
+            return { block: 'button' };
+        })));
     })
     .on('cycle', function(event) {
         console.log(String(event.target));
@@ -20,4 +30,3 @@ suite
         console.log('Fastest is ' + this.filter('fastest').pluck('name'));
     })
     .run();
-
